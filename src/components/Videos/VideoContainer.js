@@ -42,7 +42,6 @@ export default VideoContainer;
 
 const styles = StyleSheet.create({
   video: {
-    width: '100%',
-    height: '100%',
+    flex:1
   },
 });

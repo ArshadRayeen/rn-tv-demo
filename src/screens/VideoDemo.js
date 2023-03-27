@@ -1,10 +1,6 @@
 import React, {
   useState,
-  useEffect,
   useRef,
-  useCallback,
-  useContext,
-  createRef,
 } from 'react';
 import {
   View,
@@ -43,10 +39,6 @@ const VideoDemo = () => {
   function pushVideoEventStack(event, params) {
     let eventStr = event + '(' + (params ? JSON.stringify(params) : '') + ')';
     console.log('Video event: ' + eventStr);
-    const eventLines = EVENT_LINES;
-    // setVideoEventStack((oldVideoEventStack) =>
-    //   [...oldVideoEventStack, eventStr].slice(eventLines * -1),
-    // );
   }
 
   function onReadyForDisplay() {
@@ -116,60 +108,52 @@ const VideoDemo = () => {
   }
 
   return (
-    <View style={[Style.styles.right]}>
-      <View style={[Style.styles.content]}>
-        {/* <View
-          style={styles.videoContainer}> */}
-        <VideoContainer
-          ref={playerRef}
-          source={source}
-          paused={isPaused()}
-          onReadyForDisplay={onReadyForDisplay}
-          onLoadStart={onLoadStart}
-          onLoad={onLoad}
-          onPlaybackRateChange={onPlaybackRateChange}
-          onProgress={onProgress}
-          onEnd={onEnd}
-          onError={onError}
-        />
+    <>
+      <VideoContainer
+        ref={playerRef}
+        source={source}
+        paused={isPaused()}
+        onReadyForDisplay={onReadyForDisplay}
+        onLoadStart={onLoadStart}
+        onLoad={onLoad}
+        onPlaybackRateChange={onPlaybackRateChange}
+        onProgress={onProgress}
+        onEnd={onEnd}
+        onError={onError}
+      />
 
-        <VideoProgressBar
-          duration={videoDuration}
-          time={videoTime}
-          style={styles.progressBar}
-          seek={(seconds) => {
-            playerRef.current.seek(seconds);
-          }}
-        />
-        <View style={styles.videoControls}>
-          <TouchableOpacity
-            ref={playPauseButtonRef}
-            style={[styles.videoControl, isPaused() && { backgroundColor: Style.buttonUnfocusedColor }]} onPress={((e) => {
-              setPaused(!isPaused());
-            })}>
-            <Text style={styles.videoControlText}>
-              {isPaused() ? 'Play' : 'Pause'}
-            </Text>
-          </TouchableOpacity>
-          <View style={styles.videoTime}>
-            <Text style={styles.videoTimeText}>
-              {formatTime(videoTime) + ' / ' + formatTime(videoDuration)}
-            </Text>
-          </View>
+      <VideoProgressBar
+        duration={videoDuration}
+        time={videoTime}
+        style={styles.progressBar}
+        seek={(seconds) => {
+          playerRef.current.seek(seconds);
+        }}
+      />
+      <View style={styles.videoControls}>
+        <TouchableOpacity
+          ref={playPauseButtonRef}
+          style={[styles.videoControl, isPaused() && { backgroundColor: Style.buttonUnfocusedColor }]} onPress={((e) => {
+            setPaused(!isPaused());
+          })}>
+          <Text style={styles.videoControlText}>
+            {isPaused() ? 'Play' : 'Pause'}
+          </Text>
+        </TouchableOpacity>
+        <View style={styles.videoTime}>
+          <Text style={styles.videoTimeText}>
+            {formatTime(videoTime) + ' / ' + formatTime(videoDuration)}
+          </Text>
         </View>
       </View>
-      {/* </View> */}
-    </View>
+    </>
   );
 };
 
 export default VideoDemo;
 
 const styles = StyleSheet.create({
-  videoContainer: {
-    width: Style.px(1280),
-    height: Style.px(720),
-  },
+
   videoOverlayVisible: {
     position: 'absolute',
     width: '100%',
